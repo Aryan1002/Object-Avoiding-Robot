@@ -1,0 +1,74 @@
+
+const int rightIR = 2; // 
+const int leftIR = 3;  // 
+const int motorRightForward = 4; 
+const int motorRightBackward = 5;
+const int motorLeftForward = 6; /
+const int motorLeftBackward = 7; 
+
+void setup() {
+  // Initialize IR sensor pins as input
+  pinMode(rightIR, INPUT);
+  pinMode(leftIR, INPUT);
+
+  // Initialize motor control pins as output
+  pinMode(motorRightForward, OUTPUT);
+  pinMode(motorRightBackward, OUTPUT);
+  pinMode(motorLeftForward, OUTPUT);
+  pinMode(motorLeftBackward, OUTPUT);
+
+  // Stop motors initially
+  stopMotors();
+}
+
+void loop() {
+  // Read IR sensor states
+  bool rightIRState = digitalRead(rightIR); 
+  bool leftIRState = digitalRead(leftIR);   
+
+  if (rightIRState && leftIRState) {
+    //  stop the car
+    stopMotors();
+  } else if (rightIRState) {
+    // move left
+    moveLeft();
+  } else if (leftIRState) {
+    //  move right
+    moveRight();
+  } else {
+    // move forward
+    moveForward();
+  }
+}
+
+// Function to stop motors
+void stopMotors() {
+  digitalWrite(motorRightForward, LOW);
+  digitalWrite(motorRightBackward, LOW);
+  digitalWrite(motorLeftForward, LOW);
+  digitalWrite(motorLeftBackward, LOW);
+}
+
+// Function to move forward
+void moveForward() {
+  digitalWrite(motorRightForward, HIGH);
+  digitalWrite(motorRightBackward, LOW);
+  digitalWrite(motorLeftForward, HIGH);
+  digitalWrite(motorLeftBackward, LOW);
+}
+
+// Function to move left
+void moveLeft() {
+  digitalWrite(motorRightForward, HIGH);
+  digitalWrite(motorRightBackward, LOW);
+  digitalWrite(motorLeftForward, LOW);
+  digitalWrite(motorLeftBackward, LOW);
+}
+
+// Function to move right
+void moveRight() {
+  digitalWrite(motorRightForward, LOW);
+  digitalWrite(motorRightBackward, LOW);
+  digitalWrite(motorLeftForward, HIGH);
+  digitalWrite(motorLeftBackward, LOW);
+}
